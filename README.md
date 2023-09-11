@@ -142,7 +142,7 @@ docker exec -it trt /bin/bash
 
 # 四、模型搭建
 
-本项目基于Segformer-b1/b2进行推理优化。
+本项目基于Segformer-b1进行推理优化。
 
 ## 预训练权重下载
 
@@ -193,7 +193,7 @@ python python/testSegFormer.py
 
 ![img](https://uvj4ui710rz.feishu.cn/space/api/box/stream/download/asynccode/?code=YzlhNTVkNjE2NjFlNDBhOTFjMWQ1MzQ3ZGNjNjk5ZmFfRnAwRXozUU9nZm4xRFBmaVVnR0xBYTNzdzc5dUNiZDRfVG9rZW46VjN2UmJoMGpzb01YRmh4N2pqVGNNTUN0bkxEXzE2OTQ0NDU5MjE6MTY5NDQ0OTUyMV9WNA)
 
-## Plugin算子融合 LayerNorm  + **LayerNorm 算子替换**
+## LayerNorm算子融合Plugin + **LayerNorm 算子替换**
 
 ![img](https://uvj4ui710rz.feishu.cn/space/api/box/stream/download/asynccode/?code=YjdmMjMxYTM4Y2M1YmNkNzliNjgxNTMxYTA2YzQ2MWNfczZkblZkcUw2dTRkUE52SFJTRHAwSXhZUlJmdnBSTWFfVG9rZW46SG00aGJSNXU2b1dCT1F4RGFSQmNjcVRZbkRnXzE2OTQ0NDU5MjE6MTY5NDQ0OTUyMV9WNA)
 
@@ -213,11 +213,11 @@ fp16
 
 共计6个算子
 
-fp32性能进一步提升
+fp32：性能提升较小
 
 ![img](https://uvj4ui710rz.feishu.cn/space/api/box/stream/download/asynccode/?code=NWQ2ZmI1NTZlYjVmM2QzNTYwNGRjYWZjZGE0ZWVhMDlfdU1reVZ5TFRrV2lBUTNTblRQckxNb2lza2Rpa2FxOTRfVG9rZW46SjhVRWJocjJzb3kzMUF4bkk4a2NwQmlXblpiXzE2OTQ0NDU5MjE6MTY5NDQ0OTUyMV9WNA)
 
-fp16:
+fp16:性能无明显提升
 
 ![img](https://uvj4ui710rz.feishu.cn/space/api/box/stream/download/asynccode/?code=OWY0ZGU0ZmJiMTU4ZDlkNmU5NzU1ZWRmYmVmMTg5OGFfZ1cyeU1tRk1TWFhIVHZ4NmxDOVBPQjkxODRHWU90SGRfVG9rZW46S0FZaGJtTjZwb0FRRHl4eDRpWGNraWl3bmdiXzE2OTQ0NDU5MjE6MTY5NDQ0OTUyMV9WNA)
 
