@@ -164,7 +164,7 @@ python tools/pytorch2onnx.py local_configs/segformer/B1/segformer.b1.1024x1024.c
 # 五、模型计算图优化
 
 ## ONNX Sim
-
+我们使用了onnxsim优化onnx简化模型
 ```Bash
 onnxsim trt/onnx/segformer.b1.1024.1024.city.160k.onnx trt/onnx/sim.segformer.b1.1024.1024.city.160k.onnx
 ```
@@ -234,12 +234,15 @@ python trt_int8_quant.py
 ```
 
 - 构建Dataloader读取测试集数据，重写next_batch，作为stream传递给Calibrator。
-  - Calibrator读取每个batch进行
+- Calibrator读取每个batch，通过read & write对cache进行更新，得到最终量化表。
+- 将重写的Calibrator加入config中，得到最后的engine。
 
 ![img](https://uvj4ui710rz.feishu.cn/space/api/box/stream/download/asynccode/?code=OTg4NTUyODhjNjYxY2FjNzk4YWNiMmIxZTI3MzNhOWJfMU04aHdTT3M1elhYZmdoYlkzS2F3UGhWbERVYzdhM1lfVG9rZW46UUhNNGJlbXVEb0pGZHB4RHU0emNRbVhvbnp2XzE2OTQ0NDU5MjE6MTY5NDQ0OTUyMV9WNA)
 
-![img](https://uvj4ui710rz.feishu.cn/space/api/box/stream/download/asynccode/?code=NmQ0MDJiNGRmNzQ1YTQ4ZDQ2MTJmZjMxMDcxOTFjMjFfVnZUQVJBZVg4bWtQejhURnZxeU9lUFlZNThqQ3prcVpfVG9rZW46QUNPV2JUS0ZFb0xHY3B4cjNOc2NnZUMxbldmXzE2OTQ0NDU5MjE6MTY5NDQ0OTUyMV9WNA)
-
+我们构建的int8 engine with partial LayerNormPlugin在batch_size=1，图片大小为1024x1024时24ms可以完成推理，但是相对误差（分类错误的像素点占总像素点的比例）在1e-2级别，这个误差对语义分割来说是一个不可用的状态（几乎全错）。
+后续可以尝试的改进：
+（1）方法一：找到使用低精度的层，手动调整为高精度实现，重新构建并测试生成的engine精度，直到找到问题层
+（2）方法二：使用Polygraphy debug工具，详情见https://github.com/NVIDIA/TensorRT/tree/main/tools/Polygraphy/examples/cli/debug
 
 
 # 补充
