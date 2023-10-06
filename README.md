@@ -187,15 +187,15 @@ python python/testSegFormer.py
 
 - **Baseline fp32**
 
-![img](https://uvj4ui710rz.feishu.cn/space/api/box/stream/download/asynccode/?code=YWQzMzBlZDAxYjgzMzkwNzhjYTkxMzYwYmY2MjEyNmVfNFhUZlNDSUF3M0gzYXphNktOajlXbk9sVUtNQ05DRnhfVG9rZW46Sjd6WmJsSGR6b05TcXB4bjJuOWNna2xoblNoXzE2OTQ0NDU5MjE6MTY5NDQ0OTUyMV9WNA)
+![img](https://gitee.com/tbdddd/TRT-Segformer/raw/main/log/img/output.png)
 
 - **Baseline fp16**
 
-![img](https://uvj4ui710rz.feishu.cn/space/api/box/stream/download/asynccode/?code=YzlhNTVkNjE2NjFlNDBhOTFjMWQ1MzQ3ZGNjNjk5ZmFfRnAwRXozUU9nZm4xRFBmaVVnR0xBYTNzdzc5dUNiZDRfVG9rZW46VjN2UmJoMGpzb01YRmh4N2pqVGNNTUN0bkxEXzE2OTQ0NDU5MjE6MTY5NDQ0OTUyMV9WNA)
+![img](https://gitee.com/tbdddd/TRT-Segformer/raw/main/log/img/b-fp16.png)
 
 ## LayerNorm算子融合Plugin + **LayerNorm 算子替换**
 
-![img](https://uvj4ui710rz.feishu.cn/space/api/box/stream/download/asynccode/?code=YjdmMjMxYTM4Y2M1YmNkNzliNjgxNTMxYTA2YzQ2MWNfczZkblZkcUw2dTRkUE52SFJTRHAwSXhZUlJmdnBSTWFfVG9rZW46SG00aGJSNXU2b1dCT1F4RGFSQmNjcVRZbkRnXzE2OTQ0NDU5MjE6MTY5NDQ0OTUyMV9WNA)
+![img](https://gitee.com/tbdddd/TRT-Segformer/raw/main/log/img/mix.png)
 
 ### V1：替换所有LayerNorm算子
 
@@ -203,11 +203,11 @@ python python/testSegFormer.py
 
 fp32
 
-![img](https://uvj4ui710rz.feishu.cn/space/api/box/stream/download/asynccode/?code=OWY1MTY5NjU2NjFjMTNjYzQzMTE2ZjY0NGIyZWYxNzZfbHY0YWp6TkNBMWk0V3Y3MlBoRUVjSmF4NUhkYVVhdTVfVG9rZW46WDRKeWJHb0hMbzR0WnR4cVJDUGNsangxbllkXzE2OTQ0NDU5MjE6MTY5NDQ0OTUyMV9WNA)
+![img](https://gitee.com/tbdddd/TRT-Segformer/raw/main/log/img/v1fp32.png)
 
 fp16
 
-![img](https://uvj4ui710rz.feishu.cn/space/api/box/stream/download/asynccode/?code=NzY4MDI0YWM4NmUyZGY2YjY5YzUzOWQyNjJhNjRjNjhfWXkwdEFVV0hKN1RwMGZmZlZ1SjZEMWZFWEZlUGFyYk5fVG9rZW46STh2aGJMaDVlb25rZVB4NkZVSmNSbTN2bmNkXzE2OTQ0NDU5MjE6MTY5NDQ0OTUyMV9WNA)
+![img](https://gitee.com/tbdddd/TRT-Segformer/raw/main/log/img/v1fp16.png)
 
 ### V2：替换部分LayerNorm算子
 
@@ -215,11 +215,11 @@ fp16
 
 fp32：性能提升较小
 
-![img](https://uvj4ui710rz.feishu.cn/space/api/box/stream/download/asynccode/?code=NWQ2ZmI1NTZlYjVmM2QzNTYwNGRjYWZjZGE0ZWVhMDlfdU1reVZ5TFRrV2lBUTNTblRQckxNb2lza2Rpa2FxOTRfVG9rZW46SjhVRWJocjJzb3kzMUF4bkk4a2NwQmlXblpiXzE2OTQ0NDU5MjE6MTY5NDQ0OTUyMV9WNA)
+![img](https://gitee.com/tbdddd/TRT-Segformer/raw/main/log/img/v2fp32.png)
 
 fp16:性能无明显提升
 
-![img](https://uvj4ui710rz.feishu.cn/space/api/box/stream/download/asynccode/?code=OWY0ZGU0ZmJiMTU4ZDlkNmU5NzU1ZWRmYmVmMTg5OGFfZ1cyeU1tRk1TWFhIVHZ4NmxDOVBPQjkxODRHWU90SGRfVG9rZW46S0FZaGJtTjZwb0FRRHl4eDRpWGNraWl3bmdiXzE2OTQ0NDU5MjE6MTY5NDQ0OTUyMV9WNA)
+![img](https://gitee.com/tbdddd/TRT-Segformer/raw/main/log/img/v2fp16.png)
 
 ### Profiler
 
@@ -237,12 +237,12 @@ python trt_int8_quant.py
 - Calibrator读取每个batch，通过read & write对cache进行更新，得到最终量化表。
 - 将重写的Calibrator加入config中，得到最后的engine。
 
-![img](https://uvj4ui710rz.feishu.cn/space/api/box/stream/download/asynccode/?code=OTg4NTUyODhjNjYxY2FjNzk4YWNiMmIxZTI3MzNhOWJfMU04aHdTT3M1elhYZmdoYlkzS2F3UGhWbERVYzdhM1lfVG9rZW46UUhNNGJlbXVEb0pGZHB4RHU0emNRbVhvbnp2XzE2OTQ0NDU5MjE6MTY5NDQ0OTUyMV9WNA)
+![img](https://gitee.com/tbdddd/TRT-Segformer/raw/main/log/img/quant.png)
 
-我们构建的int8 engine with partial LayerNormPlugin在batch_size=1，图片大小为1024x1024时24ms可以完成推理，但是相对误差（分类错误的像素点占总像素点的比例）在1e-2级别，这个误差对语义分割来说是一个不可用的状态（几乎全错）。
-后续可以尝试的改进：
-（1）方法一：找到使用低精度的层，手动调整为高精度实现，重新构建并测试生成的engine精度，直到找到问题层
-（2）方法二：使用Polygraphy debug工具，详情见https://github.com/NVIDIA/TensorRT/tree/main/tools/Polygraphy/examples/cli/debug
+- 我们构建的int8 engine with partial LayerNormPlugin在batch_size=1，图片大小为1024x1024时24ms可以完成推理，但是相对误差（分类错误的像素点占总像素点的比例）在1e-2级别，这个误差对语义分割来说是一个不可用的状态（几乎全错）。
+- 后续可以尝试的改进：
+1. 方法一：找到使用低精度的层，手动调整为高精度实现，重新构建并测试生成的engine精度，直到找到问题层
+2. 方法二：使用Polygraphy debug工具，详情见https://github.com/NVIDIA/TensorRT/tree/main/tools/Polygraphy/examples/cli/debug
 
 
 # 补充
